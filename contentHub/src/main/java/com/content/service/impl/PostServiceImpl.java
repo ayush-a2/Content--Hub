@@ -23,7 +23,7 @@ private ModelMapper modelMapper;
 		// TODO Auto-generated method stub
 		Post post=modelMapper.map(postDto, Post.class);
 		Post savepost=postRepo.save(post);
-		return modelMapper.map(savepost, PostDto.class);
+		return savepostt;
 	}
 
 	@Override
