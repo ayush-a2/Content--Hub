@@ -2,23 +2,24 @@ package com.content.service;
 
 import java.util.List;
 
+import com.content.exception.ResourceNotFoundException;
 import com.content.model.Post;
 import com.content.payloads.PostDto;
 
 public interface PostService {
-Post createPost(PostDto postDto);
+PostDto createPost(PostDto postDto ,Integer userId,Integer categoryId)throws ResourceNotFoundException;
 
-Post updatePost(PostDto postDto,Integer postId);
+PostDto updatePost(PostDto postDto,Integer postId) throws ResourceNotFoundException;
 
-void deletePost(Integer postId);
+void deletePost(Integer postId) throws ResourceNotFoundException;
 
-List<Post>getAllPost();
+List<PostDto>getAllPost();
 
-Post getPostById(Integer postId);
+PostDto getPostById(Integer postId)throws ResourceNotFoundException;
 
-List<Post>getPostsByCategory(Integer categoryId);
+List<PostDto>getPostsByCategory(Integer categoryId) throws ResourceNotFoundException ;
 
-List<Post>getPostsByUser(Integer userId);
+List<PostDto>getPostsByUser(Integer userId) throws ResourceNotFoundException ;
 
 List<Post> searchPosts(String Keyword);
 
