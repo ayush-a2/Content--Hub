@@ -28,6 +28,12 @@ private List<Post> posts=new ArrayList<>();
 public Category() {
 	super();
 }
+public List<Post> getPosts() {
+	return posts;
+}
+public void setPosts(List<Post> posts) {
+	this.posts = posts;
+}
 public Integer getCategoryId() {
 	return categoryId;
 }
@@ -46,10 +52,6 @@ public String getCategoryDescription() {
 public void setCategoryDescription(String categoryDescription) {
 	this.categoryDescription = categoryDescription;
 }
-@Override
-public String toString() {
-	return "Category [categoryId=" + categoryId + ", categorytitle=" + categorytitle + ", categoryDescription="
-			+ categoryDescription + "]";
-}
+
 
 }
