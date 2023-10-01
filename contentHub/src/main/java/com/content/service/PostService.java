@@ -5,6 +5,7 @@ import java.util.List;
 import com.content.exception.ResourceNotFoundException;
 import com.content.model.Post;
 import com.content.payloads.PostDto;
+import com.content.payloads.PostResponse;
 
 public interface PostService {
 PostDto createPost(PostDto postDto ,Integer userId,Integer categoryId)throws ResourceNotFoundException;
@@ -13,7 +14,7 @@ PostDto updatePost(PostDto postDto,Integer postId) throws ResourceNotFoundExcept
 
 void deletePost(Integer postId) throws ResourceNotFoundException;
 
-List<PostDto>getAllPost();
+PostResponse getAllPost(Integer pageNumber,Integer pageSize);
 
 PostDto getPostById(Integer postId)throws ResourceNotFoundException;
 
