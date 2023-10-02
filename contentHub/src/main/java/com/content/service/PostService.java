@@ -14,14 +14,14 @@ PostDto updatePost(PostDto postDto,Integer postId) throws ResourceNotFoundExcept
 
 void deletePost(Integer postId) throws ResourceNotFoundException;
 
-PostResponse getAllPost(Integer pageNumber,Integer pageSize);
+PostResponse getAllPost(Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
 
 PostDto getPostById(Integer postId)throws ResourceNotFoundException;
 
 List<PostDto>getPostsByCategory(Integer categoryId) throws ResourceNotFoundException ;
 
 List<PostDto>getPostsByUser(Integer userId) throws ResourceNotFoundException ;
-
-List<Post> searchPosts(String Keyword);
+//searchposts
+List<PostDto> searchPosts(String Keyword);
 
 }

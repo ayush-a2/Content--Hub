@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.content.exception.ResourceNotFoundException;
@@ -40,7 +41,7 @@ private CategoryRepo categoryRepo;
 		Category cat=categoryRepo.findById(categoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Category","Id",categoryId));
 		Post post=modelMapper.map(postDto, Post.class);
-		post.setImageName("default.png");
+		post.setImageName(postDto.getImageName());
 		post.setAddedDate(new Date());
 		post.setUser(user);
 		post.setCategory(cat);
@@ -55,7 +56,7 @@ private CategoryRepo categoryRepo;
 				.orElseThrow(() -> new ResourceNotFoundException("User","Id",postId));
 		post.setTitle(postDto.getTitle());
 		post.setContent(postDto.getContent());
-	
+	post.setImageName(postDto.getImageName());
 		Post updatedPost=postRepo.save(post);
 		return modelMapper.map(updatedPost, PostDto.class);
 		
@@ -70,10 +71,16 @@ private CategoryRepo categoryRepo;
 	}
 
 	@Override
-	public PostResponse getAllPost(Integer pageNumber,Integer pageSize) {
+	public PostResponse getAllPost(Integer pageNumber,Integer pageSize,String sortBy,String sortDir) {
 		// TODO Auto-generated method stub
-		
-		Pageable p=PageRequest.of(pageNumber, pageSize);
+		Sort sort=null;
+		if(sortDir.equalsIgnoreCase("asc")) {
+			sort=Sort.by(sortBy).ascending();
+			
+		}else {
+			sort=Sort.by(sortBy).descending();
+		}
+		Pageable p=PageRequest.of(pageNumber, pageSize,sort );
 		Page<Post> pagePost=postRepo.findAll(p);
 		List<Post>allPosts=	pagePost.getContent();
 		List<PostDto>postDtos=	allPosts.stream().map((post)->modelMapper.map(post, PostDto.class)).collect(
@@ -123,9 +130,11 @@ private CategoryRepo categoryRepo;
 	}
 
 	@Override
-	public List<Post> searchPosts(String Keyword) {
+	public List<PostDto> searchPosts(String Keyword) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Post> posts=postRepo.findByTitleContaining(Keyword);
+		List<PostDto> postDtos=posts.stream().map((post)->modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+		return postDtos;
 	}
 
 }
