@@ -7,6 +7,9 @@ import com.content.payloads.UserDto;
 
 public interface UserService {
 
+	
+	UserDto registerNewUser(UserDto userDto);
+	
  UserDto createUser(UserDto userDto);
  UserDto updateUser(UserDto userDto,Integer userId) throws ResourceNotFoundException;
  UserDto	getUserById(Integer userId) throws ResourceNotFoundException;

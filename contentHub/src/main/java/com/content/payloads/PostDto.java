@@ -4,9 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.content.model.*;
-
-import jakarta.persistence.Column;
+import com.content.model.Comment;
 
 public class PostDto {
 	private int postId;

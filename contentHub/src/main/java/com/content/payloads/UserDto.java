@@ -1,5 +1,13 @@
 package com.content.payloads;
-import jakarta.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.content.model.Role;
 public class UserDto {
 	
 private int id;
@@ -12,9 +20,24 @@ private String email;
 private String password;
 @NotEmpty
 private String about;
+
+private Set<RoleDto> roles = new HashSet<>();
+
 public UserDto() {
 	super();
 }
+
+
+public Set<RoleDto> getRoles() {
+	return roles;
+}
+
+
+public void setRoles(Set<RoleDto> roles) {
+	this.roles = roles;
+}
+
+
 public int getId() {
 	return id;
 }
