@@ -40,20 +40,6 @@ The API's Services will be used by the **Three** categories of users:
 - LOMBOK
 - SWAGGER UI
 
-## Modules
-
-- Restaurant Module
-- Customer Module
-- Admin Module
-- Food Module
-- Cart Module
-- Order Module
-- Bill Module
-- Exception Handler Module
-
-## System Structure
-
-The REST API allows a Customer to **Signup, Login** & **Browse** through the food, view product as well as Restaurant and add food to **Cart** wishlist, as well as for the Restaurant to **View** all the **Orders, Customers & food**.
 
 
 
