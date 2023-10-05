@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.content.repostories.UserRepo;
 import com.content.security.CustomeUserDetailService;
@@ -25,8 +26,17 @@ import com.content.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	public static final String[] PUBLIC_URLS= {
+			"/api/v1/auth/**",
+			"/v3/api-docs",
+			"/v2/api-docs",
+			"/swagger-resources/**",
+			"/swagger-ui/**",
+			"/webjars/**"
+	};
 	@Autowired
 	private JwtAuthenciationEntryPoint jwtAuthenciationEntryPoint;
 	@Autowired
@@ -39,9 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 	http.
 	csrf().disable().
-	authorizeHttpRequests().
-	antMatchers("/api/v1/auth/**").permitAll()
+	authorizeHttpRequests()
+	.antMatchers(PUBLIC_URLS).permitAll()
 	.antMatchers(HttpMethod.GET).permitAll()
+	
 	.anyRequest().authenticated()
 	.and().
 	exceptionHandling().
