@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.content.model.CurrentLoginUser;
 import com.content.payloads.JwtAuthRequest;
 import com.content.payloads.JwtAuthResponse;
 import com.content.payloads.UserDto;
+import com.content.security.CustomeUserDetailService;
 import com.content.security.JwtTokenHelper;
 import com.content.service.UserService;
 
@@ -26,7 +28,7 @@ public class AuthController {
 	@Autowired
 	private  JwtTokenHelper jwtTokenHelper;
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomeUserDetailService userDetailsService;
 	@Autowired
 	private  AuthenticationManager authenticationManager;
 	@Autowired
@@ -39,9 +41,14 @@ public ResponseEntity<JwtAuthResponse>createToken(
 	this.authenticate(request.getUsername(),request.getPasssword());
 	
 UserDetails userDetails=userDetailsService.loadUserByUsername(request.getUsername());
+
+
 String token=jwtTokenHelper.generateToken(userDetails);
 JwtAuthResponse response=new JwtAuthResponse();
 response.setToken(token);
+response.setId(userDetails.getUsername());
+CurrentLoginUser currentLoginUser=new CurrentLoginUser();
+currentLoginUser.setEmail((userDetails.getUsername()));
 
 return new ResponseEntity<JwtAuthResponse>(response,HttpStatus.OK);
 
