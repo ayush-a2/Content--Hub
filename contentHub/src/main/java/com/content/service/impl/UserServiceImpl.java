@@ -12,6 +12,7 @@ import com.content.config.AppConstants;
 import com.content.exception.ResourceNotFoundException;
 import com.content.model.Role;
 import com.content.model.User;
+import com.content.payloads.ResetPasswordDto;
 import com.content.payloads.UserDto;
 import com.content.repostories.RoleRepo;
 import com.content.repostories.UserRepo;
@@ -30,9 +31,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		// TODO Auto-generated method stub
-		User user=this.dtoToUser(userDto);
-		User saveUser=	userrepo.save(user);
-		return userToDto(saveUser);
+		User user= modelMapper.map(userDto, User.class);
+		Role role=roleRepo.findById(AppConstants.NORMAL_USER).get();
+		user.getRoles().clear();
+		user.getRoles().add(role);
+		
+		User save=	userrepo.save(user);
+		return modelMapper.map(save, UserDto.class);
 	}
 
 	@Override
@@ -40,6 +45,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		User user=userrepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User","Id",userId));
+	
+		
+		
+	
 	
 	user.setEmail(userDto.getEmail());
 	user.setAbout(userDto.getAbout());
@@ -101,8 +110,23 @@ public UserDto registerNewUser(UserDto userDto) {
 	user.setPassword(passwordEncoder.encode(user.getPassword()));
 	//roles
 	Role role=roleRepo.findById(AppConstants.NORMAL_USER).get();
+	
 	user.getRoles().add(role);
 	User save=userrepo.save(user);
 	return modelMapper.map(save, UserDto.class);
 }
+
+@Override
+public String updatePassword(String email, ResetPasswordDto resetPasswordDto) throws Exception {
+	// TODO Auto-generated method stub
+	User user=userrepo.findByEmail(email).orElseThrow(()-> new Exception("email not found") );
+	if(!user.getPassword().equals(resetPasswordDto.getCurrentPassword())) {
+		throw new Exception(" password not found");
+	}
+	user.setPassword(resetPasswordDto.getCurrentPassword());
+	userrepo.save(user);
+	return "password change sucessfully";
+}
+
+
 }

@@ -19,11 +19,13 @@ public class CustomeUserDetailService implements UserDetailsService{
 		User user = null;
 		try {
 			user = userRepo.findByEmail(username).orElseThrow(()-> new ResourceNotFoundException("user", "email : "+username ,0));
+
 		} catch (ResourceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return user;
 	}
+
 
 }
