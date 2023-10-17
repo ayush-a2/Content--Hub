@@ -1,5 +1,7 @@
 package com.content.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import com.content.model.CurrentLoginUser;
 import com.content.payloads.JwtAuthRequest;
 import com.content.payloads.JwtAuthResponse;
 import com.content.payloads.UserDto;
+import com.content.repostories.CurrentUserRepo;
 import com.content.security.CustomeUserDetailService;
 import com.content.security.JwtTokenHelper;
 import com.content.service.UserService;
@@ -25,6 +28,9 @@ import com.content.service.UserService;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
+	@Autowired
+	private CurrentUserRepo currentUserRepo; 
+	
 	@Autowired
 	private  JwtTokenHelper jwtTokenHelper;
 	@Autowired
@@ -49,7 +55,7 @@ response.setToken(token);
 response.setId(userDetails.getUsername());
 CurrentLoginUser currentLoginUser=new CurrentLoginUser();
 currentLoginUser.setEmail((userDetails.getUsername()));
-
+currentUserRepo.save(currentLoginUser);
 return new ResponseEntity<JwtAuthResponse>(response,HttpStatus.OK);
 
 }
@@ -69,7 +75,7 @@ return new ResponseEntity<JwtAuthResponse>(response,HttpStatus.OK);
 	}
 	//Register New User
 	@PostMapping("/register")
-	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto){
+	public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto){
 	return new ResponseEntity<UserDto>(	this.userService.registerNewUser(userDto),HttpStatus.CREATED);
 	}
 }

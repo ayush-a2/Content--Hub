@@ -53,9 +53,9 @@ public ResponseEntity<List<UserDto>> getAllUsers(){
 public ResponseEntity<UserDto> getSingleUsers(@PathVariable Integer userId) throws ResourceNotFoundException{
 	return ResponseEntity.ok(userService.getUserById(userId));
 }
-	@PutMapping("/{email}")
+	@PutMapping("/password/{email}")
 	public ResponseEntity<String> updatePassword(@PathVariable String email,@RequestBody ResetPasswordDto resetPasswordDto) throws Exception{
 		String msg=userService.updatePassword(email, resetPasswordDto);
-		return new ResponseEntity<String>(msg,HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(msg,HttpStatus.ACCEPTED);
 	}
 }

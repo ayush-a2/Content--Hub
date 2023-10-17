@@ -2,10 +2,14 @@ package com.content.payloads;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.UniqueElements;
 
 import com.content.model.Role;
 public class UserDto {
@@ -14,7 +18,7 @@ private int id;
 @NotNull
 @Size(min=7,message=" Username must be min of 7 Character")
 private String name;
-@Email(message="This email is not valid")
+@Column(name = "email", unique = true, nullable = false)
 private String email;
 @NotNull
 private String password;

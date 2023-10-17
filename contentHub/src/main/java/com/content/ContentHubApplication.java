@@ -30,7 +30,9 @@ public ModelMapper modelMapper() {
 @Override
 public void run(String... args) throws Exception {
 	// TODO Auto-generated method stub
-	System.out.println(passwordEncoder.encode("12345"));
+	String bag=passwordEncoder.encode("12345");
+	System.out.println(bag);
+
 try {
 	Role role=new Role();
 	role.setId(AppConstants.ADMIN_USER);
