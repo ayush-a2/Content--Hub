@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 	user.setEmail(userDto.getEmail());
 	user.setAbout(userDto.getAbout());
 	user.setName(user.getName());
-	user.setPassword(user.getPassword());
+	user.setPassword(passwordEncoder.encode(user.getPassword()));
 	User updateduser=userrepo.save(user);
 	return userToDto(updateduser);
 	}
@@ -110,7 +110,7 @@ public UserDto registerNewUser(UserDto userDto) {
 	user.setPassword(passwordEncoder.encode(user.getPassword()));
 	//roles
 	Role role=roleRepo.findById(AppConstants.NORMAL_USER).get();
-	
+	user.getRoles().clear();
 	user.getRoles().add(role);
 	User save=userrepo.save(user);
 	return modelMapper.map(save, UserDto.class);
@@ -121,9 +121,10 @@ public String updatePassword(String email, ResetPasswordDto resetPasswordDto) th
 	// TODO Auto-generated method stub
 	User user=userrepo.findByEmail(email).orElseThrow(()-> new Exception("email not found") );
 	if(!user.getPassword().equals(resetPasswordDto.getCurrentPassword())) {
+		System.out.println();
 		throw new Exception(" password not found");
 	}
-	user.setPassword(resetPasswordDto.getCurrentPassword());
+	user.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
 	userrepo.save(user);
 	return "password change sucessfully";
 }
