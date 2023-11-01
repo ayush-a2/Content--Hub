@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.content.exception.ResourceNotFoundException;
 import com.content.model.Category;
+import com.content.model.CurrentLoginUser;
 import com.content.model.User;
 import com.content.payloads.CategoryDto;
 import com.content.repostories.CategoryRepo;
+import com.content.repostories.CurrentUserRepo;
 import com.content.service.CategoryService;
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -20,10 +22,16 @@ private CategoryRepo categoryRepo;
 	@Autowired
 	private ModelMapper modelMapper;
 	
-
+	@Autowired
+	private CurrentUserRepo currentUserRepo;
 	@Override
-	public CategoryDto createCategory(CategoryDto categoryDto) {
+	public CategoryDto createCategory(CategoryDto categoryDto,String email) throws Exception {
 		// TODO Auto-generated method stub
+		CurrentLoginUser currentLoginUser=currentUserRepo.findByEmail(email);
+		if(currentLoginUser==null) {
+			throw new Exception("User is invalid");
+			
+		}
 	Category  cat=	modelMapper.map(categoryDto, Category.class);
 	Category saveCat=this.categoryRepo.save(cat);
 	

@@ -24,9 +24,10 @@ import com.content.service.CategoryService;
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
-	@PostMapping("/")
-public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
-	CategoryDto categoryDto2=categoryService.createCategory(categoryDto);
+	@PostMapping("/{email}")
+public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto,@PathVariable String email)
+		throws Exception{
+	CategoryDto categoryDto2=categoryService.createCategory(categoryDto,email);
 	return new ResponseEntity<CategoryDto>(categoryDto2,HttpStatus.CREATED);
 	
 }

@@ -8,7 +8,7 @@ import com.content.payloads.PostDto;
 import com.content.payloads.PostResponse;
 
 public interface PostService {
-PostDto createPost(PostDto postDto ,Integer userId,Integer categoryId)throws ResourceNotFoundException;
+PostDto createPost(PostDto postDto ,Integer userId,Integer categoryId,String email)throws ResourceNotFoundException;
 
 PostDto updatePost(PostDto postDto,Integer postId) throws ResourceNotFoundException;
 

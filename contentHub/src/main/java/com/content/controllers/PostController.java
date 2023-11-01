@@ -43,11 +43,11 @@ public class PostController {
 	@Value("${project.image}")
 	private String path;
 //create
-	@PostMapping("/user/{userId}/category/{categoryId}/posts")
+	@PostMapping("/user/{userId}/category/{categoryId}/posts/{email}")
 	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto,@PathVariable
-			Integer userId,@PathVariable Integer categoryId ) throws ResourceNotFoundException{
+			Integer userId,@PathVariable Integer categoryId, @PathVariable String email ) throws ResourceNotFoundException{
 		
-	PostDto createPost=postService.createPost(postDto, userId, categoryId);
+	PostDto createPost=postService.createPost(postDto, userId, categoryId,email);
 	
 		
 		return new ResponseEntity<PostDto>(createPost,HttpStatus.CREATED);

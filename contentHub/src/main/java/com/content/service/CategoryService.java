@@ -6,7 +6,7 @@ import com.content.exception.ResourceNotFoundException;
 import com.content.payloads.CategoryDto;
 
 public interface CategoryService {
-public CategoryDto createCategory(CategoryDto categoryDto);
+public CategoryDto createCategory(CategoryDto categoryDto,String email) throws Exception;
 CategoryDto updateCategory(CategoryDto categoryDto,Integer categoryId)  throws ResourceNotFoundException;
 void deleteCategory(Integer categoryId) throws ResourceNotFoundException;
 CategoryDto  getCategory(Integer categoryId) throws ResourceNotFoundException;
