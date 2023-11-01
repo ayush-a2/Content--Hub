@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 
 import com.content.exception.ResourceNotFoundException;
 import com.content.model.Category;
+import com.content.model.CurrentLoginUser;
 import com.content.model.Post;
 import com.content.model.User;
 import com.content.payloads.PostDto;
 import com.content.payloads.PostResponse;
 import com.content.repostories.CategoryRepo;
+import com.content.repostories.CurrentUserRepo;
 import com.content.repostories.PostRepo;
 import com.content.repostories.UserRepo;
 import com.content.service.PostService;
@@ -33,9 +35,20 @@ private ModelMapper modelMapper;
 private UserRepo userrepo;
 @Autowired
 private CategoryRepo categoryRepo;
+@Autowired
+private CurrentUserRepo currentUserRepo;
 	@Override
-	public PostDto createPost(PostDto postDto,Integer userId,Integer categoryId) throws ResourceNotFoundException {
+	public PostDto createPost(PostDto postDto,Integer userId,Integer categoryId,String email) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
+		CurrentLoginUser currentLoginUser=currentUserRepo.findByEmail(email);
+		if(currentLoginUser==null) {
+			new ResourceNotFoundException("email","Id",userId);
+			
+		}
+				
+		
+		
+		
 		User user=userrepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User","Id",userId));
 		Category cat=categoryRepo.findById(categoryId)

@@ -46,6 +46,8 @@ public ResponseEntity<JwtAuthResponse>createToken(
 		) throws Exception{
 	this.authenticate(request.getUsername(),request.getPasssword());
 	
+		currentUserRepo.deleteAll();
+	
 UserDetails userDetails=userDetailsService.loadUserByUsername(request.getUsername());
 
 
