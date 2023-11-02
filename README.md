@@ -18,8 +18,6 @@ The API's Services will be used by the **Three** categories of users:
 
 - **User (Customer)**
 
-- **User (Restaurant)**
-
 ## Tech Stack
 
 - JAVA
